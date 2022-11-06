@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import MonacoEditor from '@uiw/react-monacoeditor';
+import data from './data.json';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <div className="App">
+            <MonacoEditor
+                language="json"
+                value={JSON.stringify(data, null, '\t')}
+                options={{
+                    theme: 'vs-dark',
+                    autoIndent: 'brackets',
+                    copyWithSyntaxHighlighting: true,
+                    fontLigatures: true,
+                    fontSize: 14,
+                    fontFamily: 'Operator Mono',
+                    wordWrap: 'on',
+                    wrappingIndent: 'deepIndent',
+                    wrappingStrategy: 'advanced',
+                    foldingStrategy: 'indentation',
+                    matchBrackets: 'always',
+                    fontWeight: '300',
+                    readOnly: true,
+                    detectIndentation: true,
+                    minimap: {
+                        enabled: false,
+                    },
+                }}
+                height="100vh"
+            />
+        </div>
+    );
 }
 
 export default App;
