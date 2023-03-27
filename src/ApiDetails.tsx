@@ -76,21 +76,21 @@ export default function ApiDetails() {
     useEffect(() => {
         setAPIresponse({});
         setQueryObject({});
-        if (apiDetails?.headers.isRequired) {
-            setCurrentOption('headers');
-            setHeadersObject(apiDetails?.headers?.params);
-        } else if (apiDetails?.body.isRequired) {
-            setCurrentOption('body');
-            setInputData(apiDetails?.body?.params);
-        } else if (apiDetails?.query.isRequired) {
-            setCurrentOption('query');
-            setQueryObject(apiDetails?.query?.params);
-        } else if (apiDetails?.url?.variables?.isRequired) {
-            setCurrentOption('pathVariables');
-            setPathVariablesObject(apiDetails?.url?.variables?.params);
-        } else {
-            setCurrentOption('');
-        }
+        // if (apiDetails?.headers.isRequired) {
+        //     setCurrentOption('headers');
+        //     setHeadersObject(apiDetails?.headers?.params);
+        // } else if (apiDetails?.body.isRequired) {
+        //     setCurrentOption('body');
+        //     setInputData(apiDetails?.body?.params);
+        // } else if (apiDetails?.query.isRequired) {
+        //     setCurrentOption('query');
+        //     setQueryObject(apiDetails?.query?.params);
+        // } else if (apiDetails?.url?.variables?.isRequired) {
+        //     setCurrentOption('pathVariables');
+        //     setPathVariablesObject(apiDetails?.url?.variables?.params);
+        // } else {
+        //     setCurrentOption('');
+        // }
     }, [setAPIresponse, id, apiDetails]);
 
     // Setting up currentOption
@@ -292,7 +292,7 @@ export default function ApiDetails() {
                             </h1>
                             <button
                                 onClick={() => setAPIresponse({})}
-                                className="font-base lg:font-lg font-ubuntu normal-transition py-2 ml-5 items-end justify-self-end rounded-md border border-gray-600 px-3 font-medium hover:shadow-lg active:scale-95 dark:border-gray-600 dark:text-white"
+                                className="font-base lg:font-lg font-ubuntu normal-transition py-1 ml-5 items-end justify-self-end rounded-md border border-gray-600 px-3 font-medium hover:shadow-lg active:scale-95 dark:border-gray-600 dark:text-white"
                             >
                                 Reset
                             </button>

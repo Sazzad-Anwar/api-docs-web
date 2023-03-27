@@ -32,7 +32,6 @@ export default function useThemeToggler() {
                 setTheme('dark');
             }
         }
-        console.log('hello');
     };
 
     return { theme, toggleTheme };

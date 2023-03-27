@@ -135,6 +135,37 @@
                 "isRequired": false,
                 "params": {}
             }
+        },
+        {
+            "id": "6",
+            "name": "Update a post",
+            "description": "",
+            "url": {
+                "path": "/posts/:id",
+                "variables": {
+                    "isRequired": true,
+                    "params": {
+                        "id": ""
+                    }
+                }
+            },
+            "method": "PUT",
+            "body": {
+                "isRequired": true,
+                "params": {
+                    "title": "",
+                    "body": "",
+                    "userId": ""
+                }
+            },
+            "headers": {
+                "isRequired": false,
+                "params": {}
+            },
+            "query": {
+                "isRequired": false,
+                "params": {}
+            }
         }
     ]
 }
