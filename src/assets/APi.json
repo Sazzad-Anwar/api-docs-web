@@ -1,0 +1,140 @@
+{
+    "baseUrl": "https://jsonplaceholder.typicode.com",
+    "routes": [
+        {
+            "id": "1",
+            "name": "Get Posts",
+            "description": "",
+            "url": {
+                "path": "/posts",
+                "variables": {
+                    "isRequired": false,
+                    "params": {}
+                }
+            },
+            "method": "GET",
+            "body": {
+                "isRequired": false,
+                "params": {}
+            },
+            "headers": {
+                "isRequired": false,
+                "params": {}
+            },
+            "query": {
+                "isRequired": false,
+                "params": {}
+            }
+        },
+        {
+            "id": "2",
+            "name": "Get Single Posts",
+            "description": "",
+            "url": {
+                "path": "/posts/:id",
+                "variables": {
+                    "isRequired": true,
+                    "params": {
+                        "id": ""
+                    }
+                }
+            },
+            "method": "GET",
+            "body": {
+                "isRequired": false,
+                "params": {}
+            },
+            "headers": {
+                "isRequired": false,
+                "params": {}
+            },
+            "query": {
+                "isRequired": false,
+                "params": {}
+            }
+        },
+        {
+            "id": "3",
+            "name": "Get Comments of Posts",
+            "description": "",
+            "url": {
+                "path": "/posts/:id/comments",
+                "variables": {
+                    "isRequired": true,
+                    "params": {
+                        "id": ""
+                    }
+                }
+            },
+            "method": "GET",
+            "body": {
+                "isRequired": false,
+                "params": {}
+            },
+            "headers": {
+                "isRequired": false,
+                "params": {}
+            },
+            "query": {
+                "isRequired": false,
+                "params": {}
+            }
+        },
+        {
+            "id": "4",
+            "name": "Get Comments",
+            "description": "",
+            "url": {
+                "path": "/comments",
+                "variables": {
+                    "isRequired": false,
+                    "params": {}
+                }
+            },
+            "method": "GET",
+            "body": {
+                "isRequired": false,
+                "params": {}
+            },
+            "headers": {
+                "isRequired": false,
+                "params": {}
+            },
+            "query": {
+                "isRequired": true,
+                "params": {
+                    "postId": ""
+                }
+            }
+        },
+        {
+            "id": "5",
+            "name": "Add Post",
+            "description": "",
+            "url": {
+                "path": "/posts",
+                "variables": {
+                    "isRequired": false,
+                    "params": {}
+                }
+            },
+            "method": "POST",
+            "body": {
+                "isRequired": true,
+                "params": {
+                    "title": "",
+                    "body": "",
+                    "userId": ""
+                }
+            },
+            "headers": {
+                "isRequired": false,
+                "params": {}
+            },
+            "query": {
+                "isRequired": false,
+                "params": {}
+            }
+        }
+    ]
+}
