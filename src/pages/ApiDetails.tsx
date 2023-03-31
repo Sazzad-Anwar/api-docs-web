@@ -234,6 +234,19 @@ export default function ApiDetails() {
         }
     };
 
+    const payloadSize = (data: any): string => {
+        // Convert JSON data to string
+        // Convert JSON data to string
+        const json_string = JSON.stringify(data);
+
+        // Calculate length of string in bytes
+        const string_length = new TextEncoder().encode(json_string).length;
+
+        // Convert payload size to KB
+        const payload_size_kb = +(string_length / 1024).toFixed(2);
+        return payload_size_kb > 1 ? `${payload_size_kb} KB` : `${string_length} B`;
+    };
+
     const description = () => {
         return { __html: apiDetails?.description ? apiDetails?.description : '' };
     };
@@ -375,6 +388,16 @@ export default function ApiDetails() {
                                         }
                                     >
                                         {resultStatus.time}
+                                    </span>
+                                </p>
+                                <p className="font-ubuntu mr-4 text-base font-semibold dark:font-normal dark:text-white">
+                                    Size:
+                                    <span
+                                        className={
+                                            'ml-1 font-normal text-green-600 dark:font-normal dark:text-green-400'
+                                        }
+                                    >
+                                        {payloadSize(result)}
                                     </span>
                                 </p>
                             </div>
