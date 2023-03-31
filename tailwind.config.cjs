@@ -26,5 +26,5 @@ module.exports = {
       "dark-primary-50": "#212121",
     })
   },
-  plugins: [require('@tailwindcss/line-clamp'),],
+  plugins: [require('@tailwindcss/line-clamp'), require('@tailwindcss/typography')],
 }

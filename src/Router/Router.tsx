@@ -2,8 +2,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import { ERoutes } from './routes.enum';
 import { Suspense, lazy } from 'react';
 import Loader from '../components/Loader/Index';
-import Home from '../Home';
-import ApiDetails from '../ApiDetails';
+import Home from '../pages/Home';
+import ApiDetails from '../pages/ApiDetails';
+const AddAPI = lazy(() => import('../pages/AddAPI'));
 const Error = lazy(() => import('../components/Error/Error'));
 const Layout = lazy(() => import('../layouts/Layout'));
 
@@ -38,6 +39,19 @@ const router = createBrowserRouter([
                 ),
             },
         ],
+    },
+    {
+        path: ERoutes.CREATE_API,
+        element: (
+            <Suspense fallback={<Loader fullPage />}>
+                <AddAPI />
+            </Suspense>
+        ),
+        errorElement: (
+            <Suspense fallback={<Loader fullPage />}>
+                <Error />
+            </Suspense>
+        ),
     },
 ]);
 

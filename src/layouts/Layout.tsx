@@ -1,17 +1,28 @@
 import SideBar from '../components/SideBar/Index';
 import api from '../assets/APi.json';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import useThemeToggler from '../hooks/useThemeToggle/Index';
+import { ApiData } from '../model/type.model';
+import useDeviceWidth from '../hooks/useDeviceWidth/useDeviceWidth';
 
 export default function Layout() {
     const { theme } = useThemeToggler();
+    const { isMobileWidth } = useDeviceWidth();
+    const location = useLocation();
+    const apiDocs: ApiData = localStorage.getItem('apiDocDetails')
+        ? JSON.parse(localStorage.getItem('apiDocDetails')!)
+        : {};
 
     return (
         <>
-            <div className="flex shadow-xl">
-                <SideBar src={api} title="JSON placeholder API" />
-                <div className="w-full">
+            <div className="flex shadow-xl w-full">
+                {location.pathname !== '/' && <SideBar src={apiDocs} title="API DOCS" />}
+                <div
+                    className={
+                        location.pathname === '/' ? 'w-full' : isMobileWidth ? 'w-full' : 'w-10/12'
+                    }
+                >
                     <Outlet />
                 </div>
             </div>

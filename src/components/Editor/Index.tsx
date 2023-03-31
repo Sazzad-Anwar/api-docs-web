@@ -8,11 +8,12 @@ import useDebounce from '../../hooks/useDebounce/Index';
 type EditorPropsType = {
     jsonData: any;
     readOnly: boolean;
-    height?: string;
+    height?: number | string;
+    width?: number | string;
     setData?: (value: any) => void;
 };
 
-export default function Editor({ jsonData, readOnly, height, setData }: EditorPropsType) {
+export default function Editor({ jsonData, readOnly, height, setData, width }: EditorPropsType) {
     let [value, setValue] = useState<string>(JSON.stringify(jsonData));
     const debouncedValue = useDebounce<any>(value, 500);
 
@@ -48,7 +49,8 @@ export default function Editor({ jsonData, readOnly, height, setData }: EditorPr
                 theme={localStorage.getItem('theme') === 'dark' ? 'vs-dark' : 'vs'}
                 loading={<Loader />}
                 height={height}
-                className="h-full border border-gray-200 dark:border-gray-900"
+                width={width}
+                className="w-full h-full border border-gray-200 dark:border-gray-900"
                 defaultLanguage="json"
                 onChange={handleEditorChange}
             />
