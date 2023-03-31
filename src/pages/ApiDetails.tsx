@@ -25,14 +25,16 @@ export default function ApiDetails() {
     let apiDetails: ApiType = store?.api?.routes?.find((item: ApiType) => item?.id === id)!;
     const [open, setOpen] = useState<boolean>(false);
     const [isCopied, setIsCopied] = useState<boolean>(false);
-    const [currentOption, setCurrentOption] = useState<string>('body');
+    const [currentOption, setCurrentOption] = useState<string>('');
     const [url, setURL] = useState<string>('');
     const [inputData, setInputData] = useState<any>({});
+    const [result, setResult] = useState<any>();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const [result, setResult] = useState([]);
-    const [queryObject, setQueryObject] = useState<any>({});
+    const [queryObject, setQueryObject] = useState<any>(apiDetails?.query?.params ?? {});
     const [headersObject, setHeadersObject] = useState<any>({});
-    const [pathVariablesObject, setPathVariablesObject] = useState<any>({});
+    const [pathVariablesObject, setPathVariablesObject] = useState<any>(
+        apiDetails?.url?.variables?.params ?? {},
+    );
     const [paramsData, setParamsData] = useState<any>({});
     const [resultStatus, setResultStatus] = useState<StatusType>({} as StatusType);
     const { isMobileWidth } = useDeviceWidth();
@@ -84,17 +86,21 @@ export default function ApiDetails() {
         setResultStatus({} as StatusType);
         if (apiDetails?.headers?.isRequired) {
             setCurrentOption('headers');
+            setParamsData(apiDetails?.headers?.params);
         } else if (apiDetails?.body?.isRequired) {
             setCurrentOption('body');
+            setParamsData(apiDetails?.body?.params);
         } else if (apiDetails?.query?.isRequired) {
             setCurrentOption('query');
+            setParamsData(apiDetails?.query?.params);
         } else if (apiDetails?.url?.variables?.isRequired) {
             setCurrentOption('pathVariables');
+            setParamsData(apiDetails?.url?.variables?.params);
         } else {
-            setParamsData({});
+            setCurrentOption('');
         }
 
-        if (!localStorage.getItem('apiDocDetails')) {
+        if (!Object.keys(apiDetails)) {
             navigate('/');
         }
     }, [id]);
