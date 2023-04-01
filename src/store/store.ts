@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { ApiData } from '../model/type.model';
+import { ApiModel } from '../model/api-model';
 
 type Store = {
     isSidebarOpen: boolean;
@@ -12,7 +13,7 @@ const useStore = create<Store>((set) => ({
     isSidebarOpen: false,
     api: localStorage.getItem('apiDocDetails')
         ? JSON.parse(localStorage.getItem('apiDocDetails')!)
-        : ({} as ApiData),
+        : (ApiModel as ApiData),
 
     addApi: (apiData: string) => {
         localStorage.setItem('apiDocDetails', apiData);

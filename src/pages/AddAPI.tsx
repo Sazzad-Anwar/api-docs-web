@@ -4,7 +4,7 @@ import { FaMoon } from 'react-icons/fa';
 import { BsFillSunFill } from 'react-icons/bs';
 import { Suspense, lazy } from 'react';
 import Loader from '../components/Loader/Index';
-import { DemoStructure } from '../model/api-model';
+import { ApiModel, DemoStructure } from '../model/api-model';
 import { useNavigate } from 'react-router-dom';
 import { ApiData } from '../model/type.model';
 import { v4 as uuid } from 'uuid';
@@ -21,7 +21,7 @@ export default function AddAPI() {
     let [apiDetailsDoc, setApiDetailsDoc] = useState<string>('');
     let [api, setApi] = useState<ApiData>({} as ApiData);
     let [isEdited, setIsEdited] = useState<boolean>(false);
-    const [openModal, setOpenModal] = useState<boolean>(false);
+    let [openModal, setOpenModal] = useState<boolean>(false);
     let store = useStore();
 
     let handleSetData = (value: string): void => {
