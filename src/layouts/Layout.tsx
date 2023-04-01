@@ -24,7 +24,7 @@ export default function Layout() {
                             ? 'w-full'
                             : isMobileWidth
                             ? 'w-full'
-                            : 'w-9/12 xl:w-10/12'
+                            : 'w-9/12 2xl:w-10/12'
                     }
                 >
                     <Outlet />
