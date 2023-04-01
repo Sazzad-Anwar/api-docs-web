@@ -36,7 +36,7 @@ export default function SideBar({ src, title, className }: SideBarPropsType) {
             setSidebarClass('hidden');
         } else if (!isMobileWidth) {
             setSidebarClass(
-                'h-screen overflow-auto relative border-r bg-primary-400 dark:bg-dark-primary-40 border-gray-200 dark:border-gray-600 w-2/12',
+                'h-screen overflow-auto relative border-r bg-primary-400 dark:bg-dark-primary-40 border-gray-200 dark:border-gray-600 w-3/12 xl:w-2/12',
             );
         }
     }, [isMobileWidth, store.isSidebarOpen]);

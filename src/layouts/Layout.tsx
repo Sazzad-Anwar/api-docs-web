@@ -20,7 +20,11 @@ export default function Layout() {
                 {location.pathname !== '/' && <SideBar src={apiDocs} title="API DOCS" />}
                 <div
                     className={
-                        location.pathname === '/' ? 'w-full' : isMobileWidth ? 'w-full' : 'w-10/12'
+                        location.pathname === '/'
+                            ? 'w-full'
+                            : isMobileWidth
+                            ? 'w-full'
+                            : 'w-9/12 xl:w-10/12'
                     }
                 >
                     <Outlet />

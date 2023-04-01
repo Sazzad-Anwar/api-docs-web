@@ -39,7 +39,11 @@ export default function AddAPI() {
     };
 
     useEffect(() => {
-        setApi(store.api);
+        if (Object.values(store.api).length) {
+            setApi(store.api);
+        } else {
+            setApi(ApiModel);
+        }
     }, []);
 
     return (

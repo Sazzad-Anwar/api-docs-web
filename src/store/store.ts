@@ -13,7 +13,7 @@ const useStore = create<Store>((set) => ({
     isSidebarOpen: false,
     api: localStorage.getItem('apiDocDetails')
         ? JSON.parse(localStorage.getItem('apiDocDetails')!)
-        : (ApiModel as ApiData),
+        : ({} as ApiData),
 
     addApi: (apiData: string) => {
         localStorage.setItem('apiDocDetails', apiData);
