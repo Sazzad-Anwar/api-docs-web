@@ -68,7 +68,8 @@ export default function AddAPI() {
                         className="font-base flex items-center cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 justify-self-end rounded border border-gray-200 px-2 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white ml-2"
                         onClick={() => setOpenModal(true)}
                     >
-                        <HiOutlineCode size={20} className="mr-1" /> Show structure
+                        <HiOutlineCode size={20} className="mr-1" />
+                        <span className="hidden lg:block">Show structure</span>
                     </button>
                 </div>
                 <Suspense fallback={<Loader />}>
