@@ -15,19 +15,19 @@ export default function Home() {
             <button onClick={toggleTheme} className="absolute right-5 top-5 dark:text-white">
                 {theme === 'dark' ? <FaMoon /> : <BsFillSunFill />}
             </button>
-            <SiPostman size={60} className="dark:text-[#c16630] mb-3" />
+            <SiPostman size={60} className="text-[#c16630] mb-3" />
             <h1 className="dark:text-white text-xl">Welcome to API Docs</h1>
             <button
                 onClick={() => {
-                    if (Object.values(store.api).length) {
-                        navigate(`/api/${store.api?.routes[0]?.id}/details`);
+                    if (store?.apiCollections?.length) {
+                        navigate(`/collections`);
                     } else {
-                        navigate('/api/create');
+                        navigate('/collections/create');
                     }
                 }}
                 className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded border border-gray-200 px-14 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white ml-2 mt-3"
             >
-                {Object.values(store.api).length ? 'Go to docs' : 'Create API'}
+                {store?.apiCollections?.length ? 'Go to collections' : 'Create API'}
             </button>
         </div>
     );

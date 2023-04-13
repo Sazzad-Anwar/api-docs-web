@@ -8,32 +8,10 @@ type ModalType = {
     children: ReactNode;
 };
 
-export default function Modal({ isOpen, onClose, className, children }: ModalType) {
-    const modalRef = useRef<HTMLDivElement>(null);
-
-    const handleBlur = (event: FocusEvent<HTMLInputElement, Element>) => {
-        if (modalRef.current && !modalRef.current.contains(event.target)) {
-            debugger;
-            onClose();
-        }
-    };
-
-    const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-        if (event.key === 'Escape') {
-            debugger;
-            onClose();
-        }
-    };
-
-    useEffect(() => {
-        modalRef?.current?.focus();
-    }, []);
-
+export default function Modal({ isOpen, onClose, className = '', children }: ModalType) {
     return createPortal(
         <div
-            onBlur={handleBlur}
-            onKeyDown={handleKeyDown}
-            tabIndex={-1}
+            tabIndex={1}
             className={`${isOpen ? '' : 'hidden'} fixed z-10 inset-0 overflow-y-auto`}
         >
             <div className="flex items-center justify-center min-h-screen">
@@ -47,8 +25,7 @@ export default function Modal({ isOpen, onClose, className, children }: ModalTyp
                     }
                     role="dialog"
                     aria-modal="true"
-                    aria-labelledby="modal-headline"
-                    ref={modalRef}
+                    id="modal"
                 >
                     {children}
                 </div>

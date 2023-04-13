@@ -18,11 +18,11 @@ import useDeviceWidth from '../hooks/useDeviceWidth/useDeviceWidth';
 const Editor = lazy(() => import('../components/Editor/Index'));
 
 export default function ApiDetails() {
-    const { id } = useParams();
+    const { id, apiId } = useParams();
     let { theme, toggleTheme } = useThemeToggler();
     let navigate = useNavigate();
     const store = useStore();
-    let apiDetails: ApiType = store?.api?.routes?.find((item: ApiType) => item?.id === id)!;
+    let apiDetails: ApiType = store?.api?.routes?.find((item: ApiType) => item?.id === apiId)!;
     const [open, setOpen] = useState<boolean>(false);
     const [isCopied, setIsCopied] = useState<boolean>(false);
     const [currentOption, setCurrentOption] = useState<string>('');
@@ -100,10 +100,11 @@ export default function ApiDetails() {
             setCurrentOption('');
         }
 
-        if (!Object.keys(apiDetails)) {
+        if (apiDetails === null) {
             navigate('/');
         }
-    }, [id]);
+        store.getApiDetails(id!);
+    }, [id, apiId]);
 
     // Setting up currentOption
     useEffect(() => {
@@ -121,7 +122,7 @@ export default function ApiDetails() {
     // Setting up dynamic URL
     useEffect(() => {
         let data: string = '';
-        let url: string = api?.baseUrl + apiDetails?.url?.path;
+        let url: string = store?.api?.baseUrl + apiDetails?.url?.path;
         if (apiDetails?.query?.isRequired && Object.keys(queryObject).length) {
             Object.keys(queryObject).map((item: any, i) => {
                 if (Object.values(queryObject!)[i] !== '') {
@@ -305,6 +306,12 @@ export default function ApiDetails() {
                     </button>
                 </div>
                 <button
+                    onClick={() => navigate(`/collections/${id}/api/${apiId}/update`)}
+                    className="font-base cursor-pointer lg:text-base font-ubuntu normal-transition py-1 items-end justify-self-end rounded border border-gray-200 px-3 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white ml-2"
+                >
+                    Edit
+                </button>
+                <button
                     onClick={() => makeAPIRequest()}
                     className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded border border-gray-200 px-3 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white ml-2"
                 >
@@ -317,9 +324,9 @@ export default function ApiDetails() {
                         key={option.name}
                         onClick={() => setCurrentOption(option.name)}
                         className={
-                            'dark:text-primary-400 mr-4 flex items-center mx-2 py-1 border-b' +
+                            'dark:text-primary-400 mr-4 flex items-center mx-2 py-1 border-b-2 rounded-bl-sm rounded-br-sm ' +
                             (currentOption === option.name
-                                ? '  dark:border-[#c16630] '
+                                ? ' border-[#c16630] '
                                 : ' border-transparent')
                         }
                     >
@@ -407,7 +414,7 @@ export default function ApiDetails() {
                         <Loader />
                     ) : (
                         <Suspense fallback={<Loader />}>
-                            <Editor jsonData={result} readOnly height="55vh" />
+                            <Editor jsonData={result} readOnly height="50vh" />
                         </Suspense>
                     )}
                 </div>

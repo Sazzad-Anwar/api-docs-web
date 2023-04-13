@@ -1,4 +1,6 @@
 export type ApiType = {
+    isGrouped: boolean;
+    groupName?: string;
     id?: string;
     name: string;
     description: string;
@@ -26,12 +28,14 @@ export type ApiType = {
 
 export type ApiData = {
     baseUrl: string;
+    id?: string;
+    collectionName: string;
     routes: ApiType[];
 };
 
 export type SideBarPropsType = {
-    src: ApiData;
-    title: string;
+    apiId: string;
+    collectionId: string;
     className?: string;
 };
 

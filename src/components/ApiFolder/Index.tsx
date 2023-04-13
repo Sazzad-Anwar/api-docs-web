@@ -21,9 +21,10 @@ export default function ApiFolder({ apiName, api }: { apiName: string; api: ApiT
     let [isOpen, setIsOpen] = useState<boolean>(false);
     let navigate = useNavigate();
     let params = useParams();
+    console.log(api);
 
     useEffect(() => {
-        if (api.find((item) => item.id === params?.id)) {
+        if (api.find((item) => item.id === params?.apiId)) {
             setIsOpen(true);
         } else {
             setIsOpen(false);
@@ -51,12 +52,13 @@ export default function ApiFolder({ apiName, api }: { apiName: string; api: ApiT
                             ? 'visible opacity-100 h-full w-full py-2'
                             : ' invisible h-0 w-full opacity-0') +
                         ' ml-2  pl-4 dark:text-white block text-left truncate border-l dark:border-gray-500  hover:border-dark-primary-50 dark:hover:border-white hover:dark:text-gray-400 normal-transition rounded-r-md ' +
-                        (params?.id === apiItem?.id
+                        (params?.apiId === apiItem?.id
                             ? ' dark:border-white border-dark-primary-50 bg-white shadow-md dark:bg-dark-primary-50 text-base'
                             : 'text-sm border-gray-300')
                     }
                     onClick={() => {
-                        navigate(`/api/${apiItem.id}/details`, { state: apiItem });
+                        console.log('api open');
+                        navigate(`/collections/${params?.id}/api/${params?.apiId}`);
                     }}
                 >
                     {ApiMethod(apiItem.method, apiItem.name)}

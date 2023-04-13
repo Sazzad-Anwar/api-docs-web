@@ -1,40 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useThemeToggler from '../hooks/useThemeToggle/Index';
 import { FaMoon } from 'react-icons/fa';
 import { BsFillSunFill } from 'react-icons/bs';
 import { Suspense, lazy } from 'react';
 import Loader from '../components/Loader/Index';
-import { SingleApi } from '../model/api-model';
+import { ApiModel, DemoStructure } from '../model/api-model';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ApiType } from '../model/type.model';
+import { ApiData } from '../model/type.model';
+import { v4 as uuid } from 'uuid';
 import { BiArrowBack } from 'react-icons/bi';
 import { HiOutlineCode } from 'react-icons/hi';
 import { VscChromeClose } from 'react-icons/vsc';
 import useStore from '../store/store';
-import { v4 as uuid } from 'uuid';
 const Modal = lazy(() => import('../components/Modal/Modal'));
 const Editor = lazy(() => import('../components/Editor/Index'));
 
-export default function AddAPI() {
+export default function EditApiCollections() {
     let { theme, toggleTheme } = useThemeToggler();
     let navigate = useNavigate();
     let [apiDetailsDoc, setApiDetailsDoc] = useState<string>('');
-    let [api, setApi] = useState<ApiType>({} as ApiType);
+    let [api] = useState<ApiData>(ApiModel);
     let [isEdited, setIsEdited] = useState<boolean>(false);
     let [openModal, setOpenModal] = useState<boolean>(false);
     let store = useStore();
     let params = useParams();
 
-    useEffect(() => {
-        if (store?.api?.routes?.find((item) => item?.id === params?.apiId)) {
-            setApi(store?.api?.routes?.find((item) => item?.id === params?.apiId)!);
-        } else {
-            // navigate('/collections');
-        }
-    }, []);
-
     let handleSetData = (value: string): void => {
-        setApiDetailsDoc(JSON.stringify(value));
+        let jsonValue = JSON.parse(value) as ApiData;
+        let idGeneratedRoutes = jsonValue?.routes?.map((route) => ({
+            ...route,
+            id: uuid(),
+        }));
+        let updatedJSON: ApiData = {
+            id: uuid(),
+            collectionName: jsonValue?.collectionName,
+            baseUrl: jsonValue?.baseUrl,
+            routes: idGeneratedRoutes,
+        };
+        setApiDetailsDoc(JSON.stringify(updatedJSON));
         setIsEdited(true);
     };
 
@@ -44,17 +47,19 @@ export default function AddAPI() {
                 {theme === 'dark' ? <FaMoon /> : <BsFillSunFill />}
             </button>
             <div className="container mx-auto pt-10">
-                <div className="flex items-center justify-between mb-5 w-full">
+                <div className="flex items-center justify-between mb-5">
                     <div className="flex items-center">
                         <button
                             onClick={() => {
                                 navigate(-1);
                             }}
-                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
+                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end pr-3  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
                         >
                             <BiArrowBack size={25} />
                         </button>
-                        <h1 className="text-xl dark:text-gray-200 font-medium mb-0">Add Api</h1>
+                        <h1 className="text-xl dark:text-gray-200 font-medium mb-0">
+                            Update API collection:
+                        </h1>
                     </div>
                     <button
                         className="font-base flex items-center cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 justify-self-end rounded border border-gray-200 px-2 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white ml-2"
@@ -64,25 +69,13 @@ export default function AddAPI() {
                         <span className="hidden lg:block">Show structure</span>
                     </button>
                 </div>
-                <div className="my-3">
-                    <h1 className="dark:text-white text-lg mb-1">
-                        Collection Name:
-                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 bg-gray-300 rounded">
-                            {store?.api?.collectionName}
-                        </span>
-                    </h1>
-                    <h1 className="dark:text-white text-lg">
-                        Base URL:
-                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 bg-gray-300 rounded">
-                            {store?.api?.baseUrl}
-                        </span>
-                    </h1>
-                </div>
                 <Suspense fallback={<Loader />}>
                     <Editor
-                        jsonData={SingleApi}
+                        jsonData={store?.apiCollections?.find(
+                            (collection) => collection?.id === params?.id,
+                        )}
                         readOnly={false}
-                        height="70vh"
+                        height="80vh"
                         setData={handleSetData}
                     />
                 </Suspense>
@@ -91,9 +84,8 @@ export default function AddAPI() {
                     disabled={!isEdited}
                     onClick={() => {
                         if (apiDetailsDoc !== '') {
-                            let id = uuid();
-                            store.addApi(params?.id!, id, JSON.parse(apiDetailsDoc));
-                            navigate(`/collections/${params?.id}/api/${id}`);
+                            // store.updateCo();
+                            navigate(`/collections`);
                         }
                     }}
                     className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded border border-gray-200 px-14 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white mt-3 disabled:dark:border-blue-900 disabled:bg-blue-600 disabled:bg-opacity-20 disabled:text-gray-400 disabled:cursor-not-allowed disabled:active:scale-100"
@@ -101,6 +93,7 @@ export default function AddAPI() {
                     Save
                 </button>
             </div>
+
             <Suspense fallback={<Loader />}>
                 <Modal isOpen={openModal} onClose={() => setOpenModal(!openModal)}>
                     <div className="dark:bg-dark-primary-50 p-5 w-[60vw]">
@@ -119,7 +112,7 @@ export default function AddAPI() {
                         <div className="mt-4">
                             <Suspense fallback={<Loader />}>
                                 <Editor
-                                    jsonData={SingleApi}
+                                    jsonData={DemoStructure}
                                     readOnly={true}
                                     height="60vh"
                                     width="58vw"

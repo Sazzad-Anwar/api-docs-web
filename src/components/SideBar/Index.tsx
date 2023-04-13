@@ -1,31 +1,35 @@
 import { useEffect, useState } from 'react';
 import ApiFolder from '../ApiFolder/Index';
-import { SideBarPropsType } from '../../model/type.model';
-import { useNavigate } from 'react-router-dom';
-import { GrClose } from 'react-icons/gr';
+import { ApiData, SideBarPropsType } from '../../model/type.model';
+import { useNavigate, useParams } from 'react-router-dom';
 import { RiFileEditLine } from 'react-icons/ri';
-import { RxShare1 } from 'react-icons/rx';
 import useDeviceWidth from '../../hooks/useDeviceWidth/useDeviceWidth';
 import useStore from '../../store/store';
 import { VscChromeClose } from 'react-icons/vsc';
 import { HiMenuAlt1 } from 'react-icons/hi';
+import { BiArrowBack } from 'react-icons/bi';
 
-export default function SideBar({ src, title, className }: SideBarPropsType) {
+export default function SideBar({ apiId, collectionId, className }: SideBarPropsType) {
     const [apiNames, setApiNames] = useState<string[]>([]);
     const navigate = useNavigate();
     const { isMobileWidth } = useDeviceWidth();
     const [sidebarClass, setSidebarClass] = useState<string>('');
+    const { id } = useParams();
     const store = useStore();
+    let collection: ApiData =
+        store?.apiCollections?.find((collection) => collection?.id === collectionId) ??
+        ({} as ApiData);
+    let routes = collection?.routes ?? [];
 
     useEffect(() => {
-        for (let api in src.routes) {
-            let name = src.routes[api].url.path.split('/')[1];
-
-            if (!apiNames.includes(name)) {
-                setApiNames([...apiNames, name].sort());
+        collection?.routes?.map((route) => {
+            if (route?.isGrouped && route?.groupName) {
+                if (!apiNames?.find((name) => name === route?.groupName)) {
+                    apiNames.push(route?.groupName);
+                }
             }
-        }
-    }, [apiNames, src]);
+        });
+    }, []);
 
     useEffect(() => {
         if (isMobileWidth && store.isSidebarOpen) {
@@ -44,25 +48,32 @@ export default function SideBar({ src, title, className }: SideBarPropsType) {
     return (
         <div className={sidebarClass}>
             <div className="flex justify-between items-center max-w-xl dark:bg-dark-primary-50">
-                <h1 className="px-7 py-3 truncate dark:text-white text-xl sticky top-0  flex items-center justify-between">
-                    {title}
-                </h1>
-                {isMobileWidth && (
+                <div className="px-7 py-3 truncate dark:text-white sticky top-0  flex items-center justify-between w-full">
+                    <div className="flex items-center">
+                        <button onClick={() => navigate(`/collections`)} className="mr-5">
+                            <BiArrowBack />
+                        </button>
+                        <span className="truncate lg:text-sm xl:text-base">
+                            {collection?.collectionName}
+                        </span>
+                    </div>
                     <button
-                        onClick={() => store.toggleSidebar()}
-                        className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded border border-gray-200 px-1 mr-2 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white"
+                        onClick={() => navigate(`/collections/${id}/api/create`)}
+                        className="justify-self-end cursor-pointer text-sm font-ubuntu normal-transition py-1 items-end rounded border border-gray-200 px-3 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white mx-2"
                     >
-                        {store.isSidebarOpen ? <VscChromeClose /> : <HiMenuAlt1 />}
+                        Add
                     </button>
-                )}
+                    {isMobileWidth && (
+                        <button
+                            onClick={() => store.toggleSidebar()}
+                            className="justify-self-end cursor-pointer text-sm font-ubuntu normal-transition p-2 items-end rounded border border-gray-200 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white mr-1"
+                        >
+                            {store.isSidebarOpen ? <VscChromeClose /> : <HiMenuAlt1 />}
+                        </button>
+                    )}
+                </div>
             </div>
             <div className="px-7 py-2 flex items-center">
-                <button
-                    onClick={() => navigate('/api/create')}
-                    className="font-base cursor-pointer flex items-center lg:font-lg font-ubuntu normal-transition py-1 justify-self-end rounded border border-gray-200 px-3 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white mr-2"
-                >
-                    <RiFileEditLine className="mr-1" /> Edit
-                </button>
                 {/* <button className="font-base cursor-pointer flex items-center lg:font-lg font-ubuntu normal-transition py-1 justify-self-end rounded border border-gray-200 px-3 lg:w-full xl:w-auto bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white">
                     <RxShare1 className="mr-1" /> Share
                 </button> */}
@@ -72,7 +83,7 @@ export default function SideBar({ src, title, className }: SideBarPropsType) {
                     <ApiFolder
                         key={apiName}
                         apiName={apiName}
-                        api={src.routes.filter((api) => api.url.path.split('/')[1] === apiName)!}
+                        api={routes.filter((api) => api?.groupName === apiName)!}
                     />
                 ))}
             </div>

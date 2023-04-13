@@ -11,11 +11,10 @@ import { BiArrowBack } from 'react-icons/bi';
 import { HiOutlineCode } from 'react-icons/hi';
 import { VscChromeClose } from 'react-icons/vsc';
 import useStore from '../store/store';
-import { v4 as uuid } from 'uuid';
 const Modal = lazy(() => import('../components/Modal/Modal'));
 const Editor = lazy(() => import('../components/Editor/Index'));
 
-export default function AddAPI() {
+export default function UpdateApi() {
     let { theme, toggleTheme } = useThemeToggler();
     let navigate = useNavigate();
     let [apiDetailsDoc, setApiDetailsDoc] = useState<string>('');
@@ -29,7 +28,7 @@ export default function AddAPI() {
         if (store?.api?.routes?.find((item) => item?.id === params?.apiId)) {
             setApi(store?.api?.routes?.find((item) => item?.id === params?.apiId)!);
         } else {
-            // navigate('/collections');
+            navigate('/collections');
         }
     }, []);
 
@@ -44,18 +43,16 @@ export default function AddAPI() {
                 {theme === 'dark' ? <FaMoon /> : <BsFillSunFill />}
             </button>
             <div className="container mx-auto pt-10">
-                <div className="flex items-center justify-between mb-5 w-full">
-                    <div className="flex items-center">
-                        <button
-                            onClick={() => {
-                                navigate(-1);
-                            }}
-                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
-                        >
-                            <BiArrowBack size={25} />
-                        </button>
-                        <h1 className="text-xl dark:text-gray-200 font-medium mb-0">Add Api</h1>
-                    </div>
+                <div className="flex items-center mb-5">
+                    <button
+                        onClick={() => {
+                            navigate(-1);
+                        }}
+                        className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
+                    >
+                        <BiArrowBack size={25} />
+                    </button>
+                    <h1 className="text-xl dark:text-gray-200 font-medium mb-0">Update Api:</h1>
                     <button
                         className="font-base flex items-center cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 justify-self-end rounded border border-gray-200 px-2 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white ml-2"
                         onClick={() => setOpenModal(true)}
@@ -65,35 +62,29 @@ export default function AddAPI() {
                     </button>
                 </div>
                 <div className="my-3">
-                    <h1 className="dark:text-white text-lg mb-1">
+                    <h1 className="dark:text-white text-lg font-semibold">
                         Collection Name:
-                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 bg-gray-300 rounded">
-                            {store?.api?.collectionName}
-                        </span>
+                        <span className="text-base font-normal"> {store?.api?.collectionName}</span>
                     </h1>
-                    <h1 className="dark:text-white text-lg">
-                        Base URL:
-                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 bg-gray-300 rounded">
-                            {store?.api?.baseUrl}
-                        </span>
+                    <h1 className="dark:text-white text-lg font-semibold">
+                        Base URL:{' '}
+                        <span className="text-base font-normal"> {store?.api?.baseUrl}</span>
                     </h1>
                 </div>
                 <Suspense fallback={<Loader />}>
-                    <Editor
-                        jsonData={SingleApi}
-                        readOnly={false}
-                        height="70vh"
-                        setData={handleSetData}
-                    />
+                    <Editor jsonData={api} readOnly={false} height="70vh" setData={handleSetData} />
                 </Suspense>
 
                 <button
                     disabled={!isEdited}
                     onClick={() => {
                         if (apiDetailsDoc !== '') {
-                            let id = uuid();
-                            store.addApi(params?.id!, id, JSON.parse(apiDetailsDoc));
-                            navigate(`/collections/${params?.id}/api/${id}`);
+                            store.updateApiDetails(
+                                params?.apiId!,
+                                params?.id!,
+                                JSON.parse(apiDetailsDoc),
+                            );
+                            navigate(`/collections/${params?.id}/api/${params?.apiId}`);
                         }
                     }}
                     className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded border border-gray-200 px-14 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white mt-3 disabled:dark:border-blue-900 disabled:bg-blue-600 disabled:bg-opacity-20 disabled:text-gray-400 disabled:cursor-not-allowed disabled:active:scale-100"
