@@ -38,11 +38,11 @@ export default function ApiCollections() {
                             <div
                                 key={collection?.id}
                                 onClick={() => {
-                                    // navigate(
-                                    //     `/collections/${collection?.id}/api/${collection?.routes[0]?.id}`,
-                                    // );
-                                    console.log(collection);
-                                    store.getApiDetails(collection?.id!);
+                                    navigate(
+                                        `/collections/${collection?.id}/api/${collection?.routes[0]?.id}`,
+                                    );
+                                    // console.log(collection);
+                                    // store.getApiDetails(collection?.id!);
                                 }}
                                 className="p-5 rounded-md border border-gray-500 group shadow-none hover:shadow-md normal-transition hover:border-[#c16630] flex items-center justify-between cursor-pointer"
                             >

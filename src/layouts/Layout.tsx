@@ -1,4 +1,4 @@
-import SideBar from '../components/SideBar/Index';
+import SideBar from '../components/SideBar/Sidebar';
 import api from '../assets/APi.json';
 import { Outlet, useLocation, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';

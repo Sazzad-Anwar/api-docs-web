@@ -21,7 +21,6 @@ export default function ApiFolder({ apiName, api }: { apiName: string; api: ApiT
     let [isOpen, setIsOpen] = useState<boolean>(false);
     let navigate = useNavigate();
     let params = useParams();
-    console.log(api);
 
     useEffect(() => {
         if (api.find((item) => item.id === params?.apiId)) {
@@ -29,7 +28,7 @@ export default function ApiFolder({ apiName, api }: { apiName: string; api: ApiT
         } else {
             setIsOpen(false);
         }
-    }, []);
+    }, [params]);
 
     return (
         <div className="w-auto py-2">
@@ -46,7 +45,7 @@ export default function ApiFolder({ apiName, api }: { apiName: string; api: ApiT
             </button>
             {api.map((apiItem) => (
                 <button
-                    key={apiItem.name + apiItem.url}
+                    key={apiItem?.id}
                     className={
                         (isOpen
                             ? 'visible opacity-100 h-full w-full py-2'
@@ -57,8 +56,7 @@ export default function ApiFolder({ apiName, api }: { apiName: string; api: ApiT
                             : 'text-sm border-gray-300')
                     }
                     onClick={() => {
-                        console.log('api open');
-                        navigate(`/collections/${params?.id}/api/${params?.apiId}`);
+                        navigate(`/collections/${params?.id}/api/${apiItem?.id}`);
                     }}
                 >
                     {ApiMethod(apiItem.method, apiItem.name)}

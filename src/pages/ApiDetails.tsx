@@ -117,7 +117,7 @@ export default function ApiDetails() {
                 ? apiDetails?.query?.params
                 : apiDetails?.url?.variables?.params,
         );
-    }, [currentOption, id]);
+    }, [currentOption, id, apiId]);
 
     // Setting up dynamic URL
     useEffect(() => {
@@ -151,7 +151,10 @@ export default function ApiDetails() {
         }
         setURL(
             url +
-                (Object.keys(queryObject).length && !Object.values(queryObject).includes('')
+                (Object.keys(queryObject).length &&
+                !Object.values(queryObject).includes('') &&
+                Object.values(queryObject).indexOf(Object.values(queryObject).length - 1) !==
+                    Object.values(queryObject)[Object.values(queryObject).length - 1]
                     ? '?'
                     : '') +
                 data,

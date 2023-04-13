@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { ERoutes } from './routes.enum';
 import { Suspense, lazy } from 'react';
 import Loader from '../components/Loader/Index';
-const AddAPI = lazy(() => import('../pages/AddApi'));
+const AddAPI = lazy(() => import('../pages/AddAPI'));
 const EditApiCollections = lazy(() => import('../pages/EditApiCollections'));
 const UpdateApi = lazy(() => import('../pages/UpdateApi'));
 const Home = lazy(() => import('../pages/Home'));
