@@ -2,11 +2,13 @@
 
 ```json
 {
-    "baseUrl": "https://jsonplaceholder.typicode.com",
+    "baseUrl": "", // base url of the API
     "routes": [
         {
             "id": "", //set id of that api
             "name": "", // set a proper name of that api
+            "isGrouped": "", //If the api is grouped or not datatype boolean
+            "groupName": "", //If the api is grouped then set the group name
             "description": "", // set a description of that api
             "url": {
                 "path": "", // set url of that api
