@@ -103,7 +103,7 @@ export default function AddAPI() {
             </div>
             <Suspense fallback={<Loader />}>
                 <Modal isOpen={openModal} onClose={() => setOpenModal(!openModal)}>
-                    <div className="dark:bg-dark-primary-50 p-5 w-[60vw]">
+                    <div className="dark:bg-dark-primary-50 p-5 w-[60vw] bg-white">
                         <div className="flex items-start justify-between">
                             <h1 className="text-lg font-medium dark:text-white">
                                 Sample structure of data to make an API docs
