@@ -49,9 +49,9 @@ export default function UpdateApi() {
                             onClick={() => {
                                 navigate(-1);
                             }}
-                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
+                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium active:scale-95  mr-2"
                         >
-                            <BiArrowBack size={25} />
+                            <BiArrowBack className="text-dark dark:text-white" size={25} />
                         </button>
                         <h1 className="text-xl dark:text-gray-200 font-medium mb-0">Update Api</h1>
                     </div>
