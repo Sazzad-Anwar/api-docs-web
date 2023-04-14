@@ -41,17 +41,15 @@ export default function ApiCollections() {
                                     navigate(
                                         `/collections/${collection?.id}/api/${collection?.routes[0]?.id}`,
                                     );
-                                    // console.log(collection);
-                                    // store.getApiDetails(collection?.id!);
                                 }}
-                                className="p-5 rounded-md border border-gray-500 group shadow-none hover:shadow-md normal-transition hover:border-[#c16630] flex items-center justify-between cursor-pointer"
+                                className="p-5 rounded-md border border-gray-200 dark:border-gray-700 group shadow-none hover:shadow-md normal-transition hover:border-[#c16630] dark:hover:border-[#c16630] flex items-center justify-between cursor-pointer"
                             >
                                 <div className="flex items-center">
                                     <SiPostman
                                         size={30}
-                                        className="dark:text-white text-black group-hover:text-[#c16630] mr-3"
+                                        className="dark:text-white text-black group-hover:text-[#c16630] mr-2"
                                     />
-                                    <span className="dark:text-white truncate w-[80%] text-lg">
+                                    <span className="dark:text-white truncate w-[18ch] text-lg group-hover:text-[#c16630]">
                                         {collection?.collectionName}
                                     </span>
                                 </div>
@@ -61,7 +59,7 @@ export default function ApiCollections() {
                                         setOpenModal(true);
                                         setSelectedCollection(collection);
                                     }}
-                                    className="p-2 hover:bg-gray-200 hover:dark:bg-gray-800 normal-transition rounded-full dark:text-white active:dark:bg-transparent"
+                                    className="p-2 hover:bg-gray-200 group-hover:text-[#c16630] hover:dark:bg-gray-800 normal-transition rounded-full dark:text-white active:dark:bg-transparent"
                                 >
                                     <MdMoreVert />
                                 </button>
@@ -77,7 +75,7 @@ export default function ApiCollections() {
             </div>
             <Suspense fallback={<Loader />}>
                 <Modal isOpen={openModal} onClose={() => setOpenModal(!openModal)}>
-                    <div className="dark:bg-dark-primary-50 p-5 w-[30vw]">
+                    <div className="dark:bg-dark-primary-50 bg-white p-5 w-[20vw]">
                         <div className="flex items-start justify-between">
                             <h1 className="text-lg font-medium dark:text-white">Actions</h1>
                             <button

@@ -43,16 +43,18 @@ export default function UpdateApi() {
                 {theme === 'dark' ? <FaMoon /> : <BsFillSunFill />}
             </button>
             <div className="container mx-auto pt-10">
-                <div className="flex items-center mb-5">
-                    <button
-                        onClick={() => {
-                            navigate(-1);
-                        }}
-                        className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
-                    >
-                        <BiArrowBack size={25} />
-                    </button>
-                    <h1 className="text-xl dark:text-gray-200 font-medium mb-0">Update Api:</h1>
+                <div className="flex items-center justify-between mb-5">
+                    <div className="flex items-center">
+                        <button
+                            onClick={() => {
+                                navigate(-1);
+                            }}
+                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
+                        >
+                            <BiArrowBack size={25} />
+                        </button>
+                        <h1 className="text-xl dark:text-gray-200 font-medium mb-0">Update Api</h1>
+                    </div>
                     <button
                         className="font-base flex items-center cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 justify-self-end rounded border border-gray-200 px-2 bg-blue-600 font-medium hover:shadow-lg active:scale-95 dark:border-blue-600 text-white ml-2"
                         onClick={() => setOpenModal(true)}
@@ -62,13 +64,17 @@ export default function UpdateApi() {
                     </button>
                 </div>
                 <div className="my-3">
-                    <h1 className="dark:text-white text-lg font-semibold">
+                    <h1 className="dark:text-white text-lg mb-1">
                         Collection Name:
-                        <span className="text-base font-normal"> {store?.api?.collectionName}</span>
+                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 text-[#fa6d1b] bg-gray-200 rounded">
+                            {store?.api?.collectionName}
+                        </span>
                     </h1>
-                    <h1 className="dark:text-white text-lg font-semibold">
-                        Base URL:{' '}
-                        <span className="text-base font-normal"> {store?.api?.baseUrl}</span>
+                    <h1 className="dark:text-white text-lg">
+                        Base URL:
+                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 text-[#fa6d1b] bg-gray-200 rounded">
+                            {store?.api?.baseUrl}
+                        </span>
                     </h1>
                 </div>
                 <Suspense fallback={<Loader />}>

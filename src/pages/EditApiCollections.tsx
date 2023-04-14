@@ -29,10 +29,10 @@ export default function EditApiCollections() {
         let jsonValue = JSON.parse(value) as ApiData;
         let idGeneratedRoutes = jsonValue?.routes?.map((route) => ({
             ...route,
-            id: uuid(),
+            id: route?.id ?? uuid(),
         }));
         let updatedJSON: ApiData = {
-            id: uuid(),
+            id: jsonValue?.id,
             collectionName: jsonValue?.collectionName,
             baseUrl: jsonValue?.baseUrl,
             routes: idGeneratedRoutes,
@@ -58,7 +58,7 @@ export default function EditApiCollections() {
                             <BiArrowBack size={25} />
                         </button>
                         <h1 className="text-xl dark:text-gray-200 font-medium mb-0">
-                            Update API collection:
+                            Update API collection
                         </h1>
                     </div>
                     <button
@@ -84,7 +84,7 @@ export default function EditApiCollections() {
                     disabled={!isEdited}
                     onClick={() => {
                         if (apiDetailsDoc !== '') {
-                            // store.updateCo();
+                            store.updateApiCollection(apiDetailsDoc);
                             navigate(`/collections`);
                         }
                     }}

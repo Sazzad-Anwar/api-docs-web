@@ -8,6 +8,7 @@ type Store = {
     api: ApiData;
     apiCollections: ApiData[];
     addApiCollection: (apiData: string) => void;
+    updateApiCollection: (apiData: string) => void;
     addApi: (collectionId: string, id: string, apiData: string) => void;
     toggleSidebar: () => void;
     getApiDetails: (id: string) => void;
@@ -28,9 +29,7 @@ const useStore = create<Store>((set) => ({
             ? JSON.parse(localStorage.getItem('apiCollections')!)
             : [];
         let updatedCollection = apiCollections?.map((collection) => {
-            console.log(collection?.id === collectionId);
             if (collection?.id === collectionId) {
-                console.log(JSON.parse(apiData));
                 let data = {
                     ...JSON.parse(apiData),
                     id,
@@ -56,6 +55,24 @@ const useStore = create<Store>((set) => ({
         let api: ApiData = JSON.parse(apiData);
         api.id = uuid();
         apiCollections.push(JSON.parse(apiData));
+        localStorage.setItem('apiCollections', JSON.stringify(apiCollections));
+        set((state) => ({
+            ...state,
+            apiCollections,
+        }));
+    },
+    updateApiCollection: (apiData: string) => {
+        let apiCollections: ApiData[] = localStorage.getItem('apiCollections')
+            ? JSON.parse(localStorage.getItem('apiCollections')!)
+            : [];
+        let apiCollection: ApiData = JSON.parse(apiData);
+        apiCollections = apiCollections.map((item) => {
+            if (item?.id === apiCollection?.id) {
+                return { ...item, ...apiCollection };
+            } else {
+                return item;
+            }
+        });
         localStorage.setItem('apiCollections', JSON.stringify(apiCollections));
         set((state) => ({
             ...state,

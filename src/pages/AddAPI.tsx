@@ -50,7 +50,7 @@ export default function AddAPI() {
                             onClick={() => {
                                 navigate(-1);
                             }}
-                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  text-white mr-2"
+                            className="font-base cursor-pointer lg:font-lg font-ubuntu normal-transition py-1 items-end justify-self-end rounded pr-2  font-medium hover:shadow-lg active:scale-95  dark:text-white mr-2"
                         >
                             <BiArrowBack size={25} />
                         </button>
@@ -67,13 +67,13 @@ export default function AddAPI() {
                 <div className="my-3">
                     <h1 className="dark:text-white text-lg mb-1">
                         Collection Name:
-                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 bg-gray-300 rounded">
+                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 text-[#fa6d1b] bg-gray-200 rounded">
                             {store?.api?.collectionName}
                         </span>
                     </h1>
                     <h1 className="dark:text-white text-lg">
                         Base URL:
-                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 bg-gray-300 rounded">
+                        <span className="text-base font-normal p-1 px-2 ml-5 dark:bg-gray-700 text-[#fa6d1b] bg-gray-200 rounded">
                             {store?.api?.baseUrl}
                         </span>
                     </h1>

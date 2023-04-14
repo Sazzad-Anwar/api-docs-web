@@ -159,7 +159,7 @@ export default function ApiDetails() {
                     : '') +
                 data,
         );
-    }, [apiDetails, url, queryObject, pathVariablesObject]);
+    }, [apiDetails, url, queryObject, pathVariablesObject, headersObject, inputData]);
 
     const makeAPIRequest = async (): Promise<void> => {
         setIsLoading(true);
@@ -417,7 +417,7 @@ export default function ApiDetails() {
                         <Loader />
                     ) : (
                         <Suspense fallback={<Loader />}>
-                            <Editor jsonData={result} readOnly height="50vh" />
+                            <Editor jsonData={result} readOnly height="55vh" />
                         </Suspense>
                     )}
                 </div>
